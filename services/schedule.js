@@ -1,5 +1,5 @@
-const {Schedule, Calendar} = require('../models');
+const {Schedule, Calendar, Participant, Member} = require('../models');
 
 exports.serviceScheduleByFindAll = () => {
-    return Schedule.findAll({include: Calendar});
+    return Schedule.findAll({include: [Calendar, Member]});
 }
