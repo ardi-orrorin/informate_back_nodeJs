@@ -1,5 +1,5 @@
-import passport from 'passport';
-import { Member }  from '../models/index.js';
+import passport      from 'passport';
+import { Member }    from '../models/index.js';
 
 module.exports = () => {
     passport.serializeUser((member, done) => {

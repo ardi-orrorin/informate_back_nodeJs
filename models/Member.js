@@ -36,7 +36,7 @@ export default (sequelize, DataTypes) => (
         },
         'EXTENSION_NUMBER': {
             type: DataTypes.STRING(255),
-            allowNull: false,
+            allowNull: true,
         },
         'MEMBER_ADDRESS': {
             type: DataTypes.STRING(255),
@@ -52,7 +52,7 @@ export default (sequelize, DataTypes) => (
         },
         'MEMBER_PIC': {
             type: DataTypes.STRING(500),
-            allowNull: false,
+            allowNull: true,
         },
         'RANK_CODE': {
             type: DataTypes.INTEGER,
@@ -60,11 +60,11 @@ export default (sequelize, DataTypes) => (
         },
         'MEMBER_OFF': {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         'MEMBER_PIC_ORIGIN': {
             type: DataTypes.STRING(500),
-            allowNull: false,
+            allowNull: true,
         },
     },{
         initialAutoIncrement: "SEQ_TBL_MEMBER_MEMBER_CODE",

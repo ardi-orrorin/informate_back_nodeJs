@@ -1,9 +1,9 @@
-import member  from './member.js';
-import calendar from './calendar.js';
-import schedule  from './schedule.js';
-import department from './department.js';
-import favCalendar from './favCalendar.js';
-import participant from './participant.js';
+import member             from './member.js';
+import calendar           from './calendar.js';
+import schedule           from './schedule.js';
+import department         from './department.js';
+import favCalendar        from './favCalendar.js';
+import participant        from './participant.js';
 
 import express from "express";
 

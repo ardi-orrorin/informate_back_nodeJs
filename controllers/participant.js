@@ -1,4 +1,4 @@
-import {participantFindAll} from '../services/participant.js';
+import { participantFindAll } from '../services/participant.js';
 
 export const  participantByFindAllController = async (req, res, next) => {
     const participantList = await participantFindAll();

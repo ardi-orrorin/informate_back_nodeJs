@@ -1,26 +1,23 @@
 'use strict';
 
-import Sequelize from 'sequelize';
-import config from '../config/config.js';
+import Sequelize          from 'sequelize';
+import config             from '../config/config.js';
 
-import participant from './Participant.js';
-import member from './Member.js';
-import favCalendar from './FavCalendar.js';
-import department from './Department.js';
-import calendar from './Calendar.js';
-import schedule from './Schedule.js';
+import participant        from './Participant.js';
+import member             from './Member.js';
+import favCalendar        from './FavCalendar.js';
+import department         from './Department.js';
+import calendar           from './Calendar.js';
+import schedule           from './Schedule.js';
 
 const env = process.env.NODE_ENV || 'dev';
-export const sequelize = new Sequelize({...config[env]});
-// export const db = {};
-
-// db.sequelize = sequelize;
-export const Calendar = calendar(sequelize, Sequelize);
-export const Schedule = schedule(sequelize, Sequelize);
-export const Member = member(sequelize, Sequelize);
-export const Department = department(sequelize, Sequelize);
-export const FavCalendar = favCalendar(sequelize, Sequelize);
-export const Participant = participant(sequelize, Sequelize);
+export const sequelize     = new Sequelize({...config[env]});
+export const Calendar      = calendar(sequelize, Sequelize);
+export const Schedule      = schedule(sequelize, Sequelize);
+export const Member        = member(sequelize, Sequelize);
+export const Department    = department(sequelize, Sequelize);
+export const FavCalendar   = favCalendar(sequelize, Sequelize);
+export const Participant   = participant(sequelize, Sequelize);
 
 
 Department.hasMany(Member, {foreignKey: 'DEPT_CODE', sourceKey: 'DEPT_CODE'});

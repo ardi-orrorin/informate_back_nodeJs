@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import rateLimit from 'express-rate-limit';
+import jwt           from 'jsonwebtoken';
+import rateLimit     from 'express-rate-limit';
 import('dotenv').config();
 
 export const verifyToken = (req, res, next) => {

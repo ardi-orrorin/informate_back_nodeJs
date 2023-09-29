@@ -1,4 +1,4 @@
-import {FavCalendar, Calendar, Member} from '../models/index.js';
+import { FavCalendar, Calendar, Member } from '../models/index.js';
 
 export const favCalendarByFindAll = async () => {
     return FavCalendar.findAll({include: [Calendar, Member]})

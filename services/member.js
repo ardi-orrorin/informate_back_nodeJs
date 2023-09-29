@@ -1,6 +1,5 @@
 import { Calendar, Schedule, Member } from '../models/index.js';
-
-// import '../models/index.js';
+import jwt from "jsonwebtoken";
 
 export const memberByFindAll = async () => {
     return await Member.findAll({include: Calendar})
@@ -10,3 +9,4 @@ export const memberByFindAll = async () => {
             return item;
         }));
 }
+
