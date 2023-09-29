@@ -7,11 +7,14 @@ import helmet            from 'helmet';
 import hpp               from 'hpp';
 import dotenv            from 'dotenv';
 import Routers           from './routes/index.js';
+import passportConfig    from './passport/index.js';
+import cors from "cors";
 
 
 dotenv.config();
 
 const app = express();
+passportConfig();
 
 app.set('port', process.env.PORT || 8000);
 
@@ -26,6 +29,12 @@ sequelize.sync({force: false})
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cors({
+    credentials: true,
+    allowedHeaders: '*',
+    methods: '*',
+    origin: '*',
+}))
 
 const sessionOption = {
     resave: false,
@@ -39,18 +48,18 @@ const sessionOption = {
 
 if(process.env.NODE_ENV === 'build'){
     app.use(morgan('combined'));
-    // sessionOption.proxy = true;
+    sessionOption.proxy = true;
     app.use(helmet({
         contentSecurityPlicy: false,
         crossOriginEmbedderPolicy: false,
         crossOriginResourcePolicy: false,
     }))
-    // app.use(hpp());
+    app.use(hpp());
 } else {
     app.use(morgan('dev'));
 }
 
-// app.use(session(sessionOption));
+app.use(session(sessionOption));
 
 app.use('/', Routers);
 
@@ -64,6 +73,7 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
+    console.log(err)
     res.locals.message = err.message;
     res.locals.err = process.env.NODE_ENV !== 'build' ? err : {};
     res.status(err.status || 500);

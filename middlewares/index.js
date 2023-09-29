@@ -1,10 +1,11 @@
 import jwt           from 'jsonwebtoken';
 import rateLimit     from 'express-rate-limit';
-import('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const verifyToken = (req, res, next) => {
     try {
-        res.locals.decoded = jwt.verify(req.headers.Authorization, process.env.JWT_SECRET);
+        res.locals.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
         return next();
     } catch (err) {
         if(err.name === 'TokenExpiredError'){
@@ -20,7 +21,8 @@ export const verifyToken = (req, res, next) => {
 
 
 export const isLoggedIn = (req, res, next) => {
-    if(req.isAuthenticated()){
+    console.log(req);
+    if(req.isAuthenticated){
         next();
     }else{
         res.status(403).json({
@@ -30,7 +32,7 @@ export const isLoggedIn = (req, res, next) => {
 }
 
 export const isNotLoggedIn = (req, res, next) => {
-    if(!req.isAuthenticated()){
+    if(!req.isAuthenticated){
         next();
     }else{
         res.status(403).json({

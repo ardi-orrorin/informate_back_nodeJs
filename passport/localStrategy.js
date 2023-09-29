@@ -3,14 +3,14 @@ import LocalStrategy from 'passport-local';
 import bcrypt from 'bcrypt';
 import {Member} from '../models/index.js';
 
-module.exports = () => {
+export default () => {
     passport.use(new LocalStrategy({
             usernameField: 'id',
             passwordField: 'password',
             passReqToCallback: false // 인증 함수로 HTTP requestd  그대로 전달할 지 여부 결정
         }, async(memberId, password, done) => {
             try{
-                const exUser = await Member.findOne({where: {userid: memberId}});
+                const exUser = await Member.findOne({where: {'MEMBER_ID': memberId}});
                 if(exUser){
                     const result = await bcrypt.compare(password, exUser['MEMBER_PWD']);
                     if(result){

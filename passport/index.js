@@ -1,7 +1,8 @@
 import passport      from 'passport';
+import local         from './localStrategy.js';
 import { Member }    from '../models/index.js';
 
-module.exports = () => {
+export default () => {
     passport.serializeUser((member, done) => {
         console.log(member);
         done(null, member['MEMBER_ID'])
@@ -12,4 +13,7 @@ module.exports = () => {
             .then(member => done(null, member))
             .catch(err => done(err));
     })
+
+    local();
+
 }

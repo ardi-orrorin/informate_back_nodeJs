@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 
 export const createToken = async (memberId) => {
     try {
-
         const member = await Member.findOne({where: {'MEMBER_ID': memberId}});
 
         if(!member) {
@@ -24,7 +23,7 @@ export const createToken = async (memberId) => {
 
         return {
             code: 200,
-            message: '토큰이 발급되었습니다.',
+            message: '로그인에 성공했습니다.',
             token,
         }
     } catch (e) {
