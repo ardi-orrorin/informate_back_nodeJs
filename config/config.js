@@ -1,6 +1,7 @@
-require('dotenv').config();
+import dotenv from "dotenv";
+dotenv.config();
 
-module.exports = {
+export default {
   "dev": {
     "username": process.env.SEQUELIZE_USERNAME,
     "password": process.env.SEQUELIZE_PASSWORD,

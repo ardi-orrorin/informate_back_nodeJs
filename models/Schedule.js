@@ -1,5 +1,4 @@
-
-module.exports = (sequelize, DataTypes) => (
+export default (sequelize, DataTypes) => (
     sequelize.define('Schedule', {
         'SCHDL_ID': {
             type: DataTypes.INTEGER,

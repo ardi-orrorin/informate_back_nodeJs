@@ -1,4 +1,4 @@
-module.exports = (sequelize, Datatypes) => (
+export default (sequelize, Datatypes) => (
     sequelize.define('department', {
         'DEPT_CODE': {
             type: Datatypes.INTEGER,

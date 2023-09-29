@@ -1,12 +1,13 @@
-const express = require('express');
-const morgan = require('morgan');
-const { sequelize } =  require("./models");
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const helmet = require('helmet');
-const hpp = require('hpp');
-const dotenv =  require('dotenv');
-const Routers = require('./routes');
+import express from 'express';
+import morgan from 'morgan';
+import { sequelize } from "./models/index.js";
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import helmet from 'helmet';
+import hpp from 'hpp';
+import dotenv from 'dotenv';
+import Routers from './routes/index.js';
+
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const sessionOption = {
     resave: false,
-    saveUninitialized:false,
+    saveUninitialized: false,
     secret: process.env.COOKIE_SECRET,
     cookie: {
         httpOnly: true,
@@ -38,18 +39,18 @@ const sessionOption = {
 
 if(process.env.NODE_ENV === 'build'){
     app.use(morgan('combined'));
-    sessionOption.proxy = true;
+    // sessionOption.proxy = true;
     app.use(helmet({
         contentSecurityPlicy: false,
         crossOriginEmbedderPolicy: false,
         crossOriginResourcePolicy: false,
     }))
-    app.use(hpp());
+    // app.use(hpp());
 } else {
     app.use(morgan('dev'));
 }
 
-app.use(session(sessionOption));
+// app.use(session(sessionOption));
 
 app.use('/', Routers);
 
@@ -70,4 +71,4 @@ app.use((err, req, res, next) => {
 })
 
 
-module.exports = app;
+export default app;

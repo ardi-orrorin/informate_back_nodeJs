@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => (
+export default (sequelize, DataTypes) => (
     sequelize.define('Calendar', {
         'INDEX_NUM': {
             type: DataTypes.INTEGER,

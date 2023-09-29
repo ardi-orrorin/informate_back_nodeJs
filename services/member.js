@@ -1,7 +1,8 @@
-const {Calendar, Schedule, Member} = require('../models');
+import { Calendar, Schedule, Member } from '../models/index.js';
 
+// import '../models/index.js';
 
-exports.memberByFindAll = async () => {
+export const memberByFindAll = async () => {
     return await Member.findAll({include: Calendar})
         .then(res =>
         res.map(item=> {

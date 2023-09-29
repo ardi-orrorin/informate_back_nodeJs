@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const { participantByFindAllController } = require('../controllers/participant');
+import { participantByFindAllController } from '../controllers/participant.js';
+import express from 'express';
+const router = express();
 
 router.get('/', participantByFindAllController);
 
-module.exports = router;
+export default router;

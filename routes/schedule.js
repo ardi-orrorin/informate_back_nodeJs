@@ -1,7 +1,7 @@
-const router = require('express').Router();
-const { scheduleByFindAll } = require('../controllers/schedule')
-
+import { scheduleByFindAll } from '../controllers/schedule.js'
+import express from 'express';
+const router = express();
 
 router.get('/', scheduleByFindAll);
 
-module.exports = router;
+export default router;

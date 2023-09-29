@@ -1,43 +1,47 @@
 'use strict';
 
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
+import config from '../config/config.js';
+
+import participant from './Participant.js';
+import member from './Member.js';
+import favCalendar from './FavCalendar.js';
+import department from './Department.js';
+import calendar from './Calendar.js';
+import schedule from './Schedule.js';
+
 const env = process.env.NODE_ENV || 'dev';
-const config = require('../config/config.js')[env];
-const sequelize = new Sequelize({...config});
-const db = {};
+export const sequelize = new Sequelize({...config[env]});
+// export const db = {};
 
-db.sequelize = sequelize;
-db.Calendar = require('./Calendar')(sequelize, Sequelize);
-db.Schedule = require('./Schedule')(sequelize, Sequelize);
-db.Member = require('./Member')(sequelize, Sequelize);
-db.Department = require('./Department')(sequelize, Sequelize);
-db.FavCalendar = require('./FavCalendar')(sequelize, Sequelize);
-db.Participant = require('./Participant')(sequelize, Sequelize);
-
+// db.sequelize = sequelize;
+export const Calendar = calendar(sequelize, Sequelize);
+export const Schedule = schedule(sequelize, Sequelize);
+export const Member = member(sequelize, Sequelize);
+export const Department = department(sequelize, Sequelize);
+export const FavCalendar = favCalendar(sequelize, Sequelize);
+export const Participant = participant(sequelize, Sequelize);
 
 
-db.Department.hasMany(db.Member, {foreignKey: 'DEPT_CODE', sourceKey: 'DEPT_CODE'});
+Department.hasMany(Member, {foreignKey: 'DEPT_CODE', sourceKey: 'DEPT_CODE'});
 
 
-db.Member.belongsTo(db.Department,{foreignKey: 'DEPT_CODE', targetKey: 'DEPT_CODE'});
-db.Member.hasMany(db.Calendar, {foreignKey: 'REF_MEMBER_CODE', sourceKey: 'MEMBER_CODE'});
-db.Member.hasMany(db.FavCalendar, {foreignKey: 'REF_MEMBER_CODE', sourceKey: 'MEMBER_CODE'})
-db.Member.belongsToMany(db.Schedule, {through: 'Participant', foreignKey: 'REF_MEMBER_CODE'})
+Member.belongsTo(Department,{foreignKey: 'DEPT_CODE', targetKey: 'DEPT_CODE'});
+Member.hasMany(Calendar, {foreignKey: 'REF_MEMBER_CODE', sourceKey: 'MEMBER_CODE'});
+Member.hasMany(FavCalendar, {foreignKey: 'REF_MEMBER_CODE', sourceKey: 'MEMBER_CODE'})
+Member.belongsToMany(Schedule, {through: 'Participant', foreignKey: 'REF_MEMBER_CODE'})
 
 
-db.Calendar.belongsTo(db.Member, {foreignKey: 'REF_MEMBER_CODE', targetKey: 'MEMBER_CODE'});
-db.Calendar.hasMany(db.FavCalendar,  {foreignKey: 'REF_CLDNR_ID', sourceKey: 'CLNDR_CODE'})
-db.Calendar.hasMany(db.Schedule, {foreignKey: 'REF_CLNDR_ID', sourceKey: 'CLNDR_CODE'});
+Calendar.belongsTo(Member, {foreignKey: 'REF_MEMBER_CODE', targetKey: 'MEMBER_CODE'});
+Calendar.hasMany(FavCalendar,  {foreignKey: 'REF_CLDNR_ID', sourceKey: 'CLNDR_CODE'})
+Calendar.hasMany(Schedule, {foreignKey: 'REF_CLNDR_ID', sourceKey: 'CLNDR_CODE'});
 
 
-db.FavCalendar.belongsTo(db.Member, {foreignKey: 'REF_MEMBER_CODE', targetKey: 'MEMBER_CODE'});
-db.FavCalendar.belongsTo(db.Calendar,  {foreignKey: 'REF_CLDNR_ID', targetKey: 'CLNDR_CODE'});
+FavCalendar.belongsTo(Member, {foreignKey: 'REF_MEMBER_CODE', targetKey: 'MEMBER_CODE'});
+FavCalendar.belongsTo(Calendar,  {foreignKey: 'REF_CLDNR_ID', targetKey: 'CLNDR_CODE'});
 
 
-db.Schedule.belongsTo(db.Calendar, {foreignKey: 'REF_CLNDR_ID', targetKey: 'CLNDR_CODE'});
-db.Schedule.belongsToMany(db.Member, {through: 'Participant', foreignKey: 'REF_SCHDL_ID'})
+Schedule.belongsTo(Calendar, {foreignKey: 'REF_CLNDR_ID', targetKey: 'CLNDR_CODE'});
+Schedule.belongsToMany(Member, {through: 'Participant', foreignKey: 'REF_SCHDL_ID'})
 
-
-
-module.exports = db;
 

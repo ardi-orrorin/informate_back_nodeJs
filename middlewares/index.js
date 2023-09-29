@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
-const rateLimit = require('express-rate-limit');
-require('dotenv').config();
+import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
+import('dotenv').config();
 
-exports.verifyToken = (req, res, next) => {
+export const verifyToken = (req, res, next) => {
     try {
         res.locals.decoded = jwt.verify(req.headers.Authorization, process.env.JWT_SECRET);
         return next();
@@ -19,7 +19,7 @@ exports.verifyToken = (req, res, next) => {
 }
 
 
-exports.isLoggedIn = (req, res, next) => {
+export const isLoggedIn = (req, res, next) => {
     if(req.isAuthenticated()){
         next();
     }else{
@@ -29,7 +29,7 @@ exports.isLoggedIn = (req, res, next) => {
     }
 }
 
-exports.isNotLoggedIn = (req, res, next) => {
+export const isNotLoggedIn = (req, res, next) => {
     if(!req.isAuthenticated()){
         next();
     }else{

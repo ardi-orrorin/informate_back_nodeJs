@@ -1,6 +1,6 @@
-const { Department, Member } = require('../models')
+import { Department, Member } from '../models/index.js';
 
-exports.departmentFindAll =  () => {
+export const departmentFindAll =  () => {
     return Department.findAll({include: Member})
         .then(result => result.map(dept => {
                 dept.Members.map(member => {

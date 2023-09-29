@@ -1,6 +1,6 @@
-const { departmentFindAll} = require('../services/department');
+import { departmentFindAll } from '../services/department.js';
 
-exports.departmentFinAllController = async (req, res, next) => {
+export const departmentFinAllController = async (req, res, next) => {
     const departmentList = await departmentFindAll();
     res.status(200).json(departmentList);
 }

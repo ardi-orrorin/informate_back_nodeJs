@@ -1,7 +1,7 @@
-const { memberByFindAll } = require('../services/member');
-const {Calendar} = require('../models')
+import { memberByFindAll } from '../services/member.js';
+import {Calendar} from '../models/index.js';
 
-exports.memberByFindAllController = async (req, res, next) => {
+export const memberByFindAllController = async (req, res, next) => {
     const memberList = await memberByFindAll();
     return res.status(200).json(memberList);
 }

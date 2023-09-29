@@ -1,5 +1,5 @@
-const {Calendar, Schedule}  = require('../models');
+import {Calendar, Schedule} from '../models/index.js';
 
-exports.serviceCalendarByFindAll = () => {
+export const serviceCalendarByFindAll = () => {
     return Calendar.findAll({include: Schedule});
 }

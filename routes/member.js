@@ -1,6 +1,8 @@
-const { memberByFindAllController } = require('../controllers/member');
-const router = require('express').Router();
+import { memberByFindAllController } from '../controllers/member.js';
+import express from 'express';
+const router = express();
+
 
 router.get('/', memberByFindAllController);
 
-module.exports = router;
+export default router;

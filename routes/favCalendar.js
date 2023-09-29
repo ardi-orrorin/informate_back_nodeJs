@@ -1,6 +1,7 @@
-const router = require('express').Router();
-const { favCalendarFindAllController } = require('../controllers/favCalendar');
+import { favCalendarFindAllController } from '../controllers/favCalendar.js';
+import express from 'express';
+const router = express();
 
 router.get('/', favCalendarFindAllController);
 
-module.exports = router;
+export default router;

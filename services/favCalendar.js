@@ -1,6 +1,6 @@
-const {FavCalendar, Calendar, Member} = require('../models')
+import {FavCalendar, Calendar, Member} from '../models/index.js';
 
-exports.favCalendarByFindAll = async () => {
+export const favCalendarByFindAll = async () => {
     return FavCalendar.findAll({include: [Calendar, Member]})
         .then(result => result.map(favCalendar => {
             console.log(favCalendar)

@@ -1,7 +1,7 @@
-const { serviceScheduleByFindAll, } = require('../services/schedule')
+import { serviceScheduleByFindAll, } from '../services/schedule.js';
 
 
-exports.scheduleByFindAll = async (req, res ,next) => {
+export const scheduleByFindAll = async (req, res ,next) => {
     const scheduleList = await serviceScheduleByFindAll();
     res.status(200).json(scheduleList);
 }

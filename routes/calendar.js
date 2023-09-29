@@ -1,7 +1,8 @@
-const router = require('express').Router();
-const { calendarByFindAll } = require('../controllers/calendar')
+import { calendarByFindAll } from '../controllers/calendar.js';
+import express from 'express';
+const router = express();
 
 
 router.get('/', calendarByFindAll);
 
-module.exports = router;
+export default router;

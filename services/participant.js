@@ -1,5 +1,5 @@
-const { Participant, Schedule, Member } = require('../models');
+import { Participant, Schedule, Member } from '../models/index.js';
 
-exports.participantFindAll = () => {
+export const participantFindAll = () => {
     return Participant.findAll({include: [Schedule, Member]});
 }
