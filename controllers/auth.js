@@ -1,6 +1,8 @@
 import { regist } from '../services/auth.js'
 import passport from "passport";
 import {createToken} from "../jwt/tokenProvider.js";
+import {loginSchema} from '../schemas/auth.js';
+
 
 export const accountRegist = async (req, res, next) => {
     const result = await regist({member: req.body, files: req.files});
@@ -22,9 +24,16 @@ export const login = async (req, res, next) => {
 
         return req.login(member, async (err) => {
             if(err) return next(err);
-            // console.log(member['MEMBER_ID'])
+
             const result = await createToken(member['MEMBER_ID']);
-            return res.status(result.code).json(result);
+
+            return res.status(result.code).json({
+                status: result.code,
+                message: result.message,
+                data: loginSchema({
+                    member: member, accessToken: result.token
+                }),
+            });
         })
     })(req, res, next);
 }

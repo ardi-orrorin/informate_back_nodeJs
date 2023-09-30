@@ -1,5 +1,5 @@
 export default (sequelize, Datatypes) => (
-    sequelize.define('department', {
+    sequelize.define('Department', {
         'DEPT_CODE': {
             type: Datatypes.INTEGER,
             primaryKey: true,

@@ -5,17 +5,19 @@ import schedule           from './schedule.js';
 import department         from './department.js';
 import favCalendar        from './favCalendar.js';
 import participant        from './participant.js';
-import auth               from "./auth.js";
-import {isLoggedIn} from "../middlewares/index.js";
+import auth               from './auth.js';
+import {verifyToken}      from "../jwt/tokenProvider.js";
+// import {isLoggedIn} from '../middlewares/index.js';
 
-const app = express();
+
+const app =      express();
 
 app.use('/auth',          auth);
-app.use('/member',        isLoggedIn, member);
-app.use('/calendar',      isLoggedIn, calendar);
-app.use('/schedule',      isLoggedIn, schedule);
-app.use('/department',    isLoggedIn, department);
-app.use('/favCalendar',   isLoggedIn, favCalendar);
-app.use('/participant',   isLoggedIn, participant);
+app.use('/member',        verifyToken, member);
+app.use('/calendar',      verifyToken, calendar);
+app.use('/schedule',      verifyToken, schedule);
+app.use('/department',    verifyToken, department);
+app.use('/favCalendar',   verifyToken, favCalendar);
+app.use('/participant',   verifyToken, participant);
 
 export default app;
