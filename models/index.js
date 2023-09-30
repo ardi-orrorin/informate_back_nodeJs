@@ -1,7 +1,8 @@
 'use strict';
 
-import Sequelize          from 'sequelize';
+import {Sequelize}        from 'sequelize';
 import config             from '../config/config.js';
+import cls                from 'cls-hooked';
 
 import participant        from './Participant.js';
 import member             from './Member.js';
@@ -12,7 +13,12 @@ import schedule           from './Schedule.js';
 import rank               from './Rank.js';
 
 const env = process.env.NODE_ENV || 'dev';
+const namespace = cls.createNamespace('db');
+
+Sequelize.useCLS(namespace);
 export const sequelize     = new Sequelize({...config[env]});
+
+
 export const Calendar      = calendar(sequelize, Sequelize);
 export const Schedule      = schedule(sequelize, Sequelize);
 export const Member        = member(sequelize, Sequelize);
