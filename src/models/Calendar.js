@@ -41,7 +41,7 @@ export default (sequelize, DataTypes) => (
         'DPRMT_CODE': {
             type: DataTypes.INTEGER,
             allowNull: false,
-        },
+        }
     },{
         timestamps: true,
         underscored: false,
@@ -50,6 +50,18 @@ export default (sequelize, DataTypes) => (
         initialAutoIncrement: "SEQ_TBL_CLNDR_CLNDR_CODE",
         updatedAt: false,
         createdAt: false,
-        deletedAt: false
+        deletedAt: false,
+        setterMethods: {
+            updateData({calendar}) {
+                if(calendar.id) this.CLNDR_CODE = calendar.id;
+                if(calendar.name) this.CLNDR_NAME = calendar.name;
+                if(calendar.indexNo) this.INDEX_NUM = calendar.indexNo;
+                if(calendar.labelColor) this.LABEL_COLOR =  calendar.labelColor;
+                if(calendar.defaultCalendar) this.DEFAULT_SELC = calendar.defaultCalendar;
+                if(calendar.departmentCode) this.DPRMT_CODE =  calendar.departmentCode;
+                if(calendar.memberCode) this.REF_MEMBER_CODE = calendar.memberCode;
+                if(calendar.openStatus) this.OPEN_STATUS = calendar.openStatus;
+            }
+        },
     })
 )
