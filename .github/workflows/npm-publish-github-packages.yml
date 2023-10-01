@@ -9,9 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: run
-      run: |
-        npm install
-        npm run dev
+    - name: npmInstall
+      run: npm install
+    - name: run dev server
+      run: npm run dev
         
     
