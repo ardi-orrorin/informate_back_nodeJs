@@ -154,10 +154,42 @@ export const updateDefaultCalendar = async ({calendar, memberCode}) => {
 export const updateCalendarIndexNo = async ({info, memberCode}) => {
     const t = await sequelize.transaction();
     try {
-        // 로직
+        const cur = await Calendar.findOne({where: {'CLNDR_CODE': info.id}});
+        const temSeq = cur['INDEX_NUM'];
+        if(info.direction === 'prev'){
+            const prev = await Calendar.findOne({where: {
+                'REF_MEMBER_CODE': memberCode,
+                'INDEX_NUM': temSeq - 1,
+                }}
+            );
+
+            cur['INDEX_NUM'] = prev['INDEX_NUM'];
+            prev['INDEX_NUM'] = temSeq;
+
+            await Calendar.update(prev);
+
+        } else if(info.direction === 'next') {
+            const next = await Calendar.findOne({where: {
+                    'REF_MEMBER_CODE': memberCode,
+                    'INDEX_NUM': temSeq + 1,
+                }}
+            );
+
+            cur['INDEX_NUM'] = next['INDEX_NUM'];
+            next['INDEX_NUM'] = temSeq;
+
+            await Calendar.update(next);
+
+        } else {
+            return {status: 521, message: '잘못 된 요청입니다.', error: new Error('잘못된 요청')};
+        }
+
+        await Calendar.update(cur);
+        return {status: 200, message: '정상정으로 수정되었습니다'};
+
     } catch (e) {
         await t.rollback();
-        return {status: 521, message: ''}
+        return {status: 521, message: '캘린더를 찾을 수 없습니다.'}
     }
 }
 
@@ -172,8 +204,17 @@ export const deleteById = async ({calendarCode, memberCode}) => {
     }
 }
 
-export const openCalendarList = async ({memberCode, pageablue}) => {
+export const openCalendarList = async ({memberCode, pageable}) => {
     const result = await Calendar.findAll({where:{'REF_MEMBER_CODE': memberCode, 'OPEN_STATUS': true }})
     return {status: 200, message: '', data: result};
 }
 
+export const myCalendarList = async ({memberCode, departmentCode}) => {
+    const calendars = Calendar.findAll({where: {
+        'REF_MEMBER_CODE': memberCode,
+        'DPRMT_CODE': departmentCode,
+        }}
+    );
+
+    return {status: 200, message: '성공적으로 불러왔습니다.', data: calendars};
+}
